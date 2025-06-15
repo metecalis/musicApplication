@@ -23,7 +23,7 @@ public class Main extends Application {
     public void start(Stage stage){
 
         UI ui = new UI();
-        MusicPlayer musicPlayer = new MusicPlayer("C:/music/bensound-acousticbreeze.mp3");
+        MusicPlayer musicPlayer = new MusicPlayer("/musics/bensound-acousticbreeze.mp3");
         var player = musicPlayer.getPlayer();
         ActionController controller = new ActionController(
                 player,
