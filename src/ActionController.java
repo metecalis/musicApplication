@@ -1,4 +1,3 @@
-import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -12,11 +11,18 @@ public class ActionController {
         double seconds = totalSeconds % 60;
         return String.format("%02d:%05.2f", minutes, seconds);
     }
-    private final MediaPlayer player;
-    private final Slider musicLine,volumeLine;
-    private final Label volumeText,durationText;
-    private final Button playButton,pauseButton,stopButton;
-    public ActionController(MediaPlayer mediaPlayer,Slider musicLine,Slider volumeLine,Label volumeText,Label durationText,Button playButton,Button pauseButton,Button stopButton) {
+    private MusicController musicController;
+    private MediaPlayer player;
+    private Slider musicLine,volumeLine;
+    private Label volumeText,durationText;
+    private Button playButton,pauseButton,stopButton,muteButton,nextButton,backButton,loopButton;
+    public ActionController(MediaPlayer mediaPlayer,Slider musicLine,Slider volumeLine,
+                            Label volumeText,Label durationText,
+                            Button playButton,Button pauseButton,Button stopButton,
+                            Button muteButton,Button nextButton,Button backButton,Button loopButton,
+                            MusicController musicController
+                            )
+    {
         this.pauseButton = pauseButton;
         this.playButton = playButton;
         this.stopButton = stopButton;
@@ -25,6 +31,11 @@ public class ActionController {
         this.volumeLine = volumeLine;
         this.volumeText = volumeText;
         this.durationText = durationText;
+        this.muteButton = muteButton;
+        this.nextButton = nextButton;
+        this.backButton = backButton;
+        this.loopButton = loopButton;
+        this.musicController = musicController;
     }
     public void setUpActions() {
         volumeLine.valueChangingProperty().addListener((obs,oldTime,newTime)->{
@@ -52,16 +63,37 @@ public class ActionController {
                 player.seek(Duration.seconds(musicLine.getValue()));
             }
         });
+
+
         pauseButton.setOnAction(event -> {
             player.pause();
+
         });
         playButton.setOnAction(event -> {
             player.play();
+            stopButton.setDisable(false);
         });
         stopButton.setOnAction(event -> {
             player.stop();
+            stopButton.setDisable(true);
         });
+        nextButton.setOnAction(event -> {
+            if(musicController.musicIsLast()){
+                System.out.println("Music list is over. You are now at last music on the list");
+            }
+            else
+                musicController.nextMusic();
 
+        });
+     /*   fastForwardButton.setOnAction(event -> {
+            if(musicLine.getValue() == musicLine.getMax()) {
+
+            }
+            else {
+                musicLine.setValue(musicLine.getValue() + 1);
+            }
+        });
+        */
     }
 
 

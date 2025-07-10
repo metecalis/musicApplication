@@ -4,7 +4,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -12,8 +14,9 @@ public class UI {
     public Pane pane;
     public Slider volumeLine,musicLine;
     public Label volumeText,durationText;
-    public Button backButton,nextButton,playButton,pauseButton,stopButton,loopButton,muteButton;
+    public Button backButton,nextButton,playButton,pauseButton,stopButton,loopButton,muteButton,fastForwardButton;
     public Scene scene;
+    public VBox vBox;
     public UI() {
         pane = new Pane();
         Image img = new Image(getClass().getResourceAsStream("/images/1.png"));
@@ -28,7 +31,7 @@ public class UI {
         musicLine.setLayoutY(200);
         musicLine.setPrefWidth(300);
 
-        volumeLine = new Slider(0, 1, 0.1);
+        volumeLine = new Slider(0, 1, 0);
         volumeLine.setLayoutX(110);
         volumeLine.setLayoutY(220);
         volumeLine.setPrefWidth(75);
@@ -48,6 +51,7 @@ public class UI {
         leftCornerRect.setLayoutX(0);
         leftCornerRect.setLayoutY(0);
 
+        vBox=new VBox(5);
         playButton = new Button();
         pauseButton = new Button();
         stopButton = new Button();
@@ -55,6 +59,10 @@ public class UI {
         nextButton=new Button();
         backButton=new Button();
         muteButton=new Button();
+        fastForwardButton=new Button();
+        fastForwardButton.setText("Fast Forward");
+        fastForwardButton.setLayoutX(0);
+        fastForwardButton.setLayoutY(0);
 
         playButton.setText("Play");
         pauseButton.setText("Pause");
@@ -64,21 +72,17 @@ public class UI {
         nextButton.setText("Next");
         muteButton.setText("Mute");
 
+        vBox.setLayoutX(20);
+        vBox.setLayoutY(20);
+        vBox.getChildren().addAll(playButton,pauseButton,stopButton,loopButton);
         muteButton.setLayoutX(215);
         muteButton.setLayoutY(220);
         nextButton.setLayoutX(440);
         nextButton.setLayoutY(200);
         backButton.setLayoutX(60);
         backButton.setLayoutY(200);
-        loopButton.setLayoutX(20);
-        loopButton.setLayoutY(110);
-        playButton.setLayoutX(20);
-        playButton.setLayoutY(20);
-        pauseButton.setLayoutX(20);
-        pauseButton.setLayoutY(50);
-        stopButton.setLayoutX(20);
-        stopButton.setLayoutY(80);
 
-        pane.getChildren().addAll(leftCornerRect,muteButton, playButton, pauseButton, stopButton,loopButton,backButton,nextButton, musicLine, volumeLine, volumeText, durationText, songImage);
+
+        pane.getChildren().addAll(leftCornerRect,vBox,muteButton,backButton,nextButton, musicLine, volumeLine, volumeText, durationText, songImage);
     }
 }
