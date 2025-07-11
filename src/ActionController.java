@@ -77,14 +77,24 @@ public class ActionController {
             player.stop();
             stopButton.setDisable(true);
         });
+        backButton.setOnAction(event -> {
+            if(musicController.musicIsFirst()){
+                System.out.println("You are now at First music on the list");
+            }
+            else
+                musicController.backMusic();
+        });
         nextButton.setOnAction(event -> {
             if(musicController.musicIsLast()){
                 System.out.println("Music list is over. You are now at last music on the list");
             }
             else
                 musicController.nextMusic();
-
         });
+        muteButton.setOnAction(event -> {
+            player.setMute(true);
+        });
+
      /*   fastForwardButton.setOnAction(event -> {
             if(musicLine.getValue() == musicLine.getMax()) {
 

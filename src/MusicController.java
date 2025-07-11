@@ -27,6 +27,21 @@ public class MusicController {
             return true;
         return false;
     }
+    public boolean musicIsFirst(){
+        if(currentIndex == 0)
+            return true;
+        return false;
+    }
+    public void backMusic() {
+        if (!musicIsFirst()) {
+            currentIndex--;
+            Music backMusic=musicList.get(currentIndex);
+            String backMusicPath=backMusic.getFilePath();
+            if(musicPlayer!= null) {
+                musicPlayer.changeMusic(backMusicPath);
+            }
+        }
+    }
 
     public void nextMusic() {
         if (!musicIsLast()) {
