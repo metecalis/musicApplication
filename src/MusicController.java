@@ -4,12 +4,16 @@ public class MusicController {
     MusicPlayer musicPlayer;
     ArrayList<Music> musicList;
     private int currentIndex;
+    private ActionController actionController;
+
+    public void setActionController(ActionController actionController) {
+        this.actionController = actionController;
+    }
     public MusicController(MusicPlayer musicPlayer) {
         musicList = new ArrayList<>();
         this.musicPlayer = musicPlayer;
         currentIndex = 0;
     }
-
 
     public void addMusic(Music newMusic) {
         musicList.add(newMusic);
@@ -50,6 +54,9 @@ public class MusicController {
             String nextMusicPath=nextMusic.getFilePath();
             if(musicPlayer!= null) {
                 musicPlayer.changeMusic(nextMusicPath);
+            }
+            if (actionController != null) {
+                actionController.updatePlayer(musicPlayer.getPlayer());
             }
         }
     }

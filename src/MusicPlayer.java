@@ -7,6 +7,9 @@ public class MusicPlayer {
     private  MediaPlayer player;
     ActionController actionController;
 
+    public void setActionController(ActionController actionController) {
+        this.actionController = actionController;
+    }
     public MusicPlayer() {
     }
     public void changeMusic(String path) {
@@ -17,6 +20,7 @@ public class MusicPlayer {
         Media media = new Media(new File(path).toURI().toString());
         player = new MediaPlayer(media);
         player.play();
+
     }
     public MediaPlayer getPlayer() {
         return player;

@@ -9,7 +9,6 @@ public class Main extends Application {
         UI ui = new UI();
 
         MusicPlayer musicPlayer = new MusicPlayer();
-
         MusicController musicController = new MusicController(musicPlayer);
 
         musicController.addMusic(new Music("Adventure", 179, "Benjamin Tissot", "Bensound", "Cinematic",
@@ -55,7 +54,8 @@ public class Main extends Application {
                 ui.loopButton,
                 musicController
         );
-
+        musicController.setActionController(controller);
+        musicPlayer.setActionController(controller);
         controller.setUpActions();
 
         Scene scene = new Scene(ui.pane, 500, 250);

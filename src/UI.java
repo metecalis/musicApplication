@@ -17,6 +17,8 @@ public class UI {
     public Button backButton,nextButton,playButton,pauseButton,stopButton,loopButton,muteButton,fastForwardButton;
     public Scene scene;
     public VBox vBox;
+
+
     public UI() {
         pane = new Pane();
         Image img = new Image(getClass().getResourceAsStream("/images/1.png"));
@@ -84,5 +86,10 @@ public class UI {
 
 
         pane.getChildren().addAll(leftCornerRect,vBox,muteButton,backButton,nextButton, musicLine, volumeLine, volumeText, durationText, songImage);
+    }
+
+
+    public void updateUI(){
+
     }
 }
