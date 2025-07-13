@@ -4,7 +4,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -17,12 +16,14 @@ public class UI {
     public Button backButton,nextButton,playButton,pauseButton,stopButton,loopButton,muteButton,fastForwardButton;
     public Scene scene;
     public VBox vBox;
-
-
-    public UI() {
+    public Image image;
+    public Music music;
+    public ImageView songImage;
+    public UI(Music newMusic) {
+        this.music = newMusic;
         pane = new Pane();
-        Image img = new Image(getClass().getResourceAsStream("/images/1.png"));
-        ImageView songImage = new ImageView(img);
+        Image img = new Image(getClass().getResource(newMusic.getImagePath()).toExternalForm());
+        songImage = new ImageView(img);
         songImage.setFitWidth(350);
         songImage.setFitHeight(200);
         songImage.setLayoutX(100);
@@ -89,7 +90,10 @@ public class UI {
     }
 
 
-    public void updateUI(){
-
+    public void updateImage(Music newMusic) {
+        System.out.println("Yeni image path: " + newMusic.getImagePath());
+        Image img = new Image(getClass().getResource(newMusic.getImagePath()).toExternalForm());
+        songImage.setImage(img);
     }
+
 }

@@ -54,7 +54,7 @@ public class MusicController {
             musicPlayer.changeMusic(loopMusicPath);
         }
         if(actionController != null) {
-            actionController.updatePlayer(musicPlayer.getPlayer());
+            actionController.updatePlayer(musicPlayer.getPlayer() );
         }
     }
 

@@ -16,12 +16,13 @@ public class ActionController {
     private Slider musicLine, volumeLine;
     private Label volumeText, durationText;
     private Button playButton, pauseButton, stopButton, muteButton, nextButton, backButton, loopButton;
-
+    private UI ui;
     public ActionController(MediaPlayer mediaPlayer, Slider musicLine, Slider volumeLine,
                             Label volumeText, Label durationText,
                             Button playButton, Button pauseButton, Button stopButton,
                             Button muteButton, Button nextButton, Button backButton, Button loopButton,
-                            MusicController musicController) {
+                            MusicController musicController,
+                            UI ui) {
         this.player = mediaPlayer;
         this.musicLine = musicLine;
         this.volumeLine = volumeLine;
@@ -36,6 +37,7 @@ public class ActionController {
         this.loopButton = loopButton;
         this.musicController = musicController;
         this.previousVolume = volumeLine.getValue();
+        this.ui = ui;
     }
 
     private String formatTime(Duration duration) {
@@ -79,8 +81,11 @@ public class ActionController {
                     player.stop();
                  }
             }
-            else
+            else {
                 musicController.loopMusic();
+                Music currentMusic = musicController.getCurrentMusic();
+                ui.updateImage(currentMusic);
+            }
         });
     }
 
@@ -130,6 +135,8 @@ public class ActionController {
                 System.out.println("You are now at first music on the list");
             } else {
                 musicController.backMusic();
+                Music currentMusic = musicController.getCurrentMusic();
+                ui.updateImage(currentMusic);
             }
         });
 
@@ -138,6 +145,8 @@ public class ActionController {
                 System.out.println("Music list is over. You are now at last music on the list");
             } else {
                 musicController.nextMusic();
+                Music currentMusic = musicController.getCurrentMusic();
+                ui.updateImage(currentMusic);
             }
         });
 
@@ -162,6 +171,7 @@ public class ActionController {
 
         loopButton.setOnAction(event -> {
             isLoop=true;
+
         });
     }
 

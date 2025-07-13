@@ -4,15 +4,17 @@ public class Music {
     private String artist;
     private String album;
     private String genre;
+    private String imagePath;
     private String filePath;
     private int duration;
-    public Music(String title, int duration, String artist, String album, String genre, String filePath) {
+    public Music(String title, int duration, String artist, String album, String genre, String filePath,String imagePath) {
         this.title = title;
         this.artist = artist;
         this.album = album;
         this.genre = genre;
         this.filePath = filePath;
         this.duration = duration;
+        this.imagePath = imagePath;
     }
     public String gettitle() {
         return title;
@@ -25,6 +27,9 @@ public class Music {
     }
     public String getGenre() {
         return genre;
+    }
+    public String getImagePath() {
+        return imagePath;
     }
     public String getFilePath() {
         return filePath;
