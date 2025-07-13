@@ -31,6 +31,7 @@ public class MusicController {
             return true;
         return false;
     }
+
     public boolean musicIsFirst(){
         if(currentIndex == 0)
             return true;
@@ -44,6 +45,16 @@ public class MusicController {
             if(musicPlayer!= null) {
                 musicPlayer.changeMusic(backMusicPath);
             }
+        }
+    }
+    public void loopMusic() {
+        Music loopMusic=musicList.get(currentIndex);
+        String loopMusicPath=loopMusic.getFilePath();
+        if(musicPlayer!= null) {
+            musicPlayer.changeMusic(loopMusicPath);
+        }
+        if(actionController != null) {
+            actionController.updatePlayer(musicPlayer.getPlayer());
         }
     }
 

@@ -9,7 +9,7 @@ public class ActionController {
     private boolean isDragging = false;
     private boolean isMuted = false;
     private double previousVolume = 0.5;
-
+    private boolean isLoop = false;
     private MediaPlayer player;
     private MusicController musicController;
 
@@ -70,14 +70,17 @@ public class ActionController {
         });
 
         player.setOnEndOfMedia(() -> {
-            if (!musicController.musicIsLast()) {
-                musicController.nextMusic();
-            } else {
-                musicLine.setValue(0);
-                durationText.setText("00:00");
-                player.stop();
+            if(!isLoop){
+                if (!musicController.musicIsLast())
+                    musicController.nextMusic();
+                else {
+                    musicLine.setValue(0);
+                    durationText.setText("00:00");
+                    player.stop();
+                 }
             }
-            System.out.println("Music is over");
+            else
+                musicController.loopMusic();
         });
     }
 
@@ -157,11 +160,9 @@ public class ActionController {
             }
         });
 
-        if (loopButton != null) {
-            loopButton.setOnAction(event -> {
-                System.out.println("Loop functionality not implemented yet");
-            });
-        }
+        loopButton.setOnAction(event -> {
+            isLoop=true;
+        });
     }
 
     public void updatePlayer(MediaPlayer newPlayer) {
