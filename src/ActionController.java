@@ -106,7 +106,6 @@ public class ActionController {
             }
         });
 
-        setupPlayerListeners();
 
         playButton.setOnAction(event -> {
             if (player != null) {
@@ -120,6 +119,7 @@ public class ActionController {
                 player.pause();
             }
         });
+        setupPlayerListeners();
 
         stopButton.setOnAction(event -> {
             if (player != null) {
@@ -137,6 +137,7 @@ public class ActionController {
                 musicController.backMusic();
                 Music currentMusic = musicController.getCurrentMusic();
                 ui.updateImage(currentMusic);
+                setupPlayerListeners();
             }
         });
 
@@ -147,6 +148,8 @@ public class ActionController {
                 musicController.nextMusic();
                 Music currentMusic = musicController.getCurrentMusic();
                 ui.updateImage(currentMusic);
+                setupPlayerListeners();
+
             }
         });
 

@@ -1,6 +1,8 @@
+import javafx.collections.FXCollections;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,8 +21,11 @@ public class UI {
     public Image image;
     public Music music;
     public ImageView songImage;
-    public UI(Music newMusic) {
+    public ListView<Music> musicListView;
+    public MusicController musicController;
+    public UI(Music newMusic,MusicController musicController) {
         this.music = newMusic;
+        this.musicController = musicController;
         pane = new Pane();
         Image img = new Image(getClass().getResource(newMusic.getImagePath()).toExternalForm());
         songImage = new ImageView(img);
@@ -29,12 +34,18 @@ public class UI {
         songImage.setLayoutX(100);
         songImage.setLayoutY(0);
 
+        musicListView=new ListView<>();
+        musicListView.getStyleClass().add("musicListView");
+        musicListView.setItems(FXCollections.observableArrayList(musicController.musicList));
+        musicListView.setLayoutX(480);
+        musicListView.setLayoutY(0);
+
         musicLine = new Slider();
         musicLine.setLayoutX(100);
         musicLine.setLayoutY(200);
         musicLine.setPrefWidth(300);
 
-        volumeLine = new Slider(0, 1, 0);
+        volumeLine = new Slider(0, 1, 0.5);
         volumeLine.setLayoutX(110);
         volumeLine.setLayoutY(220);
         volumeLine.setPrefWidth(75);
@@ -86,7 +97,7 @@ public class UI {
         backButton.setLayoutY(200);
 
 
-        pane.getChildren().addAll(leftCornerRect,vBox,muteButton,backButton,nextButton, musicLine, volumeLine, volumeText, durationText, songImage);
+        pane.getChildren().addAll(leftCornerRect,vBox,muteButton,backButton,nextButton, musicLine, volumeLine, volumeText, durationText, songImage,musicListView);
     }
 
 

@@ -1,4 +1,6 @@
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -8,6 +10,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
+
+        ObservableList<Music> musicList = FXCollections.observableArrayList();
 
         MusicPlayer musicPlayer = new MusicPlayer();
         MusicController musicController = new MusicController(musicPlayer);
@@ -39,7 +43,7 @@ public class Main extends Application {
         musicPlayer.changeMusic(currentMusic.getFilePath());
 
         var player = musicPlayer.getPlayer();
-        UI ui = new UI(currentMusic);
+        UI ui = new UI(currentMusic,musicController);
         ActionController controller = new ActionController(
                 player,
                 ui.musicLine,
@@ -60,7 +64,7 @@ public class Main extends Application {
         musicPlayer.setActionController(controller);
         controller.setUpActions();
 
-        Scene scene = new Scene(ui.pane, 500, 250);
+        Scene scene = new Scene(ui.pane, 800, 400);
         stage.setTitle("Fmcify");
         stage.setScene(scene);
         stage.show();
