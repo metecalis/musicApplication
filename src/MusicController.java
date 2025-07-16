@@ -44,6 +44,7 @@ public class MusicController {
             String backMusicPath=backMusic.getFilePath();
             if(musicPlayer!= null) {
                 musicPlayer.changeMusic(backMusicPath);
+
             }
         }
     }

@@ -1,7 +1,5 @@
 import javafx.application.Platform;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.util.Duration;
 import javafx.scene.media.MediaPlayer;
 
@@ -13,6 +11,7 @@ public class ActionController {
     private MediaPlayer player;
     private MusicController musicController;
 
+    private ListView<Music> musicListView;
     private Slider musicLine, volumeLine;
     private Label volumeText, durationText;
     private Button playButton, pauseButton, stopButton, muteButton, nextButton, backButton, loopButton;
@@ -21,6 +20,7 @@ public class ActionController {
                             Label volumeText, Label durationText,
                             Button playButton, Button pauseButton, Button stopButton,
                             Button muteButton, Button nextButton, Button backButton, Button loopButton,
+                            ListView<Music> musicListView,
                             MusicController musicController,
                             UI ui) {
         this.player = mediaPlayer;
@@ -35,17 +35,37 @@ public class ActionController {
         this.nextButton = nextButton;
         this.backButton = backButton;
         this.loopButton = loopButton;
+        this.musicListView = musicListView;
         this.musicController = musicController;
         this.previousVolume = volumeLine.getValue();
         this.ui = ui;
+        initializeListViewStyling();
+
     }
 
+    private void initializeListViewStyling() {
+        musicListView.setCellFactory(param->new ListCell<>(){
+            @Override
+            protected void updateItem(Music music, boolean empty) {
+                super.updateItem(music, empty);
+                if (empty || music == null) {
+                    setText(null);
+                    setStyle("");}
+                else {
+                    setText(music.toString());
+                    if(music.equals(musicController.getCurrentMusic()))
+                        setStyle("-fx-background-color: linear-gradient(to right, #42A5F5, #4DB6AC); -fx-text-fill: white; -fx-font-weight: bold;");
+                    else
+                        setStyle("");}
+            }
+        });
+    }
     private String formatTime(Duration duration) {
         if (duration == null) return "00:00";
-        double totalSeconds = duration.toSeconds();
-        int minutes = (int) totalSeconds / 60;
-        double seconds = totalSeconds % 60;
-        return String.format("%02d:%05.2f", minutes, seconds);
+        int totalSeconds = (int) duration.toSeconds();
+        int minutes = totalSeconds / 60;
+        int seconds = totalSeconds % 60;
+        return String.format("%02d:%02d", minutes, seconds);
     }
 
     private void setupPlayerListeners() {
@@ -73,8 +93,10 @@ public class ActionController {
 
         player.setOnEndOfMedia(() -> {
             if(!isLoop){
-                if (!musicController.musicIsLast())
+                if (!musicController.musicIsLast()) {
                     musicController.nextMusic();
+                    musicListView.refresh();
+                }
                 else {
                     musicLine.setValue(0);
                     durationText.setText("00:00");
@@ -138,6 +160,7 @@ public class ActionController {
                 Music currentMusic = musicController.getCurrentMusic();
                 ui.updateImage(currentMusic);
                 setupPlayerListeners();
+                musicListView.refresh();
             }
         });
 
@@ -149,7 +172,7 @@ public class ActionController {
                 Music currentMusic = musicController.getCurrentMusic();
                 ui.updateImage(currentMusic);
                 setupPlayerListeners();
-
+                musicListView.refresh();
             }
         });
 

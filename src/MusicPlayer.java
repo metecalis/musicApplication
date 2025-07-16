@@ -17,6 +17,7 @@ public class MusicPlayer {
             player.stop();
             player.dispose();
         }
+
         Media media = new Media(new File(path).toURI().toString());
         player = new MediaPlayer(media);
         player.play();

@@ -4,8 +4,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.net.URL;
-
 public class Main extends Application {
 
     @Override
@@ -57,6 +55,7 @@ public class Main extends Application {
                 ui.nextButton,
                 ui.backButton,
                 ui.loopButton,
+                ui.musicListView,
                 musicController,
                 ui
         );
@@ -64,7 +63,8 @@ public class Main extends Application {
         musicPlayer.setActionController(controller);
         controller.setUpActions();
 
-        Scene scene = new Scene(ui.pane, 800, 400);
+        Scene scene = new Scene(ui.pane, 800, 400 );
+        scene.getStylesheets().add(getClass().getResource("/styles/ui-style.css").toExternalForm());
         stage.setTitle("Fmcify");
         stage.setScene(scene);
         stage.show();
